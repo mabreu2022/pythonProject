@@ -1,16 +1,13 @@
-# This is a sample Python script.
+import requests
+import json
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+response = requests.get(
+    'http://api.stackexchange.com/2.2/questions?order=desc&sort=activity&site=stackoverflow')
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('Teste')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+for data in response.json()['items']:
+    if data['answer_count'] == 0:
+       print(data['title'])
+       print(data['link'])
+    else:
+       print("skipped")
+    print()
